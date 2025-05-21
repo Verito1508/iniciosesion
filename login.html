@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Iniciar sesión - CryptoApp</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input, button {
+      width: 90%;
+    }
+
+    .error {
+    color: #D8000C;
+    background-color: #FFD2D2;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 100px;
+    }
+
+    .text-content {
+      text-align: left;
+    }
+
+    .text-content h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .text-content p {
+      margin: 0;
+      color: #777;
+    }
+
+    .link-container {
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <div class="header-container">
+    <div class="logo">
+      <img src="img/logo.png" alt="Logo de CryptoApp" />
+    </div>
+    <div class="text-content">
+      <h1>CryptoApp</h1>
+      <p>Protegiendo tu identidad digital</p>
+    </div>
+  </div>
+  <div id="error-message" class="error" style="display: none;"></div>
+  <div id="message" style="margin-bottom: 20px;"></div>
+
+  <!-- FORMULARIO -->
+  <form
+    class="login-container"
+    action="php/login.php"
+    method="POST"
+  >
+    <input
+      type="email"
+      name="email"
+      placeholder="Correo electrónico"
+      required
+    />
+    <input
+      type="password"
+      name="password"
+      placeholder="Contraseña"
+      required
+    />
+
+    <button type="submit">Iniciar sesión</button>
+
+    <div class="link-container">
+      <a href="forgot_password.html">¿Olvidaste tu contraseña?</a><br>
+      ¿No tienes cuenta? <a href="register.html">Regístrate</a>
+    </div>
+  </form>
+  <script>
+    window.onload = () => {
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get("error");
+        const errorBox = document.getElementById("error-message");
+
+        if (error === "notfound") {
+            errorBox.textContent = "❌ Usuario no encontrado o correo no verificado.";
+            errorBox.style.display = "block";
+        }
+    };
+    window.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const messageDiv = document.getElementById("message");
+
+    if (params.get("verify") === "success") {
+        messageDiv.innerHTML = "✅ Cuenta verificada con éxito. Ya puedes iniciar sesión.";
+        messageDiv.style.color = "green";
+        messageDiv.style.fontWeight = "bold";
+    } else if (params.get("verify") === "invalid") {
+        messageDiv.innerHTML = "❌ El enlace de verificación es inválido o ya fue utilizado.";
+        messageDiv.style.color = "red";
+        messageDiv.style.fontWeight = "bold";
+    }
+});
+</script>
+
+
+</body>
+</html>
